@@ -1,0 +1,82 @@
+/* Fondo general del cuerpo */
+body {
+  font-family: Arial, sans-serif;            /* Define la fuente de todo el texto del sitio como Arial, con respaldo sans-serif. */
+  background-color: #f2f4f8;                 /* Establece un color de fondo claro para toda la página. */
+  margin: 0;                                 /* Elimina el margen por defecto del body. */
+  padding: 20px;                             /* Añade un espacio interno (padding) de 20 píxeles alrededor del contenido. */
+  color: #333;                               /* Establece el color del texto como gris oscuro. */
+}
+
+/* Contenedor general */
+.container {
+  background-color: #fff;                    /* Fondo blanco para el contenedor principal. */
+  padding: 30px;                             /* Espacio interno de 30 píxeles dentro del contenedor. */
+  max-width: 600px;                          /* Limita el ancho máximo del contenedor a 600 píxeles. */
+  margin: auto;                              /* Centra el contenedor horizontalmente. */
+  border-radius: 12px;                       /* Bordes redondeados de 12 píxeles. */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor del contenedor para dar profundidad. */
+}
+
+/* Títulos */
+h1, h2 {
+  text-align: center;                        /* Centra el texto de los encabezados h1 y h2. */
+  color: #2c3e50;                            /* Color oscuro azulado para los títulos. */
+  margin-bottom: 20px;                       /* Espacio inferior de 20 píxeles debajo de los títulos. */
+}
+
+/* Etiquetas del formulario */
+form label {
+  display: block;                            /* Hace que las etiquetas se muestren en su propia línea. */
+  margin-top: 15px;                          /* Espacio superior de 15 píxeles antes de cada etiqueta. */
+  font-weight: bold;                         /* Aplica negrita a las etiquetas para resaltarlas. */
+}
+
+/* Inputs y select */
+form input[type="text"],
+form input[type="password"],
+form input[type="date"],
+form select {
+  width: 100%;                               /* El campo ocupará todo el ancho disponible. */
+  padding: 8px;                              /* Espacio interno de 8 píxeles dentro del campo. */
+  margin-top: 5px;                           /* Espacio superior de 5 píxeles después de la etiqueta. */
+  border-radius: 5px;                        /* Bordes ligeramente redondeados. */
+  border: 1px solid #ccc;                    /* Borde gris claro alrededor del campo. */
+}
+
+/* Checkbox */
+form input[type="checkbox"] {
+  margin-right: 8px;                         /* Espacio de 8 píxeles a la derecha del checkbox (antes del texto). */
+}
+
+/* Botones */
+button {
+  margin-top: 20px;                          /* Espacio superior de 20 píxeles antes del botón. */
+  padding: 10px 20px;                        /* Espaciado interno: 10px arriba/abajo, 20px izquierda/derecha. */
+  background-color: #2ecc71;                 /* Fondo verde brillante. */
+  color: white;                              /* Texto blanco dentro del botón. */
+  border: none;                              /* Elimina el borde por defecto. */
+  border-radius: 5px;                        /* Bordes redondeados del botón. */
+  cursor: pointer;                           /* Cambia el cursor a una mano al pasar sobre el botón. */
+  font-size: 16px;                           /* Tamaño del texto dentro del botón. */
+}
+
+/* Efecto al pasar el mouse por encima del botón */
+button:hover {
+  background-color: #27ae60;                 /* Cambia el color de fondo a un verde más oscuro al pasar el cursor. */
+}
+
+/* Lista de proyectos */
+#listaProyectos {
+  list-style: none;                          /* Elimina los puntos o numeración de la lista. */
+  padding: 0;                                /* Elimina el relleno interno predeterminado de la lista. */
+}
+
+/* Elementos individuales de la lista */
+#listaProyectos li {
+  background-color: #eaf1fb;                 /* Fondo azul claro para cada proyecto listado. */
+  margin: 10px auto;                         /* Espacio de 10 píxeles arriba y abajo, centrado horizontalmente. */
+  max-width: 550px;                          /* Ancho máximo de cada elemento de la lista. */
+  padding: 15px;                             /* Relleno interno de 15 píxeles. */
+  border-radius: 8px;                        /* Bordes redondeados de 8 píxeles. */
+  border-left: 5px solid #3498db;            /* Una línea decorativa azul a la izquierda del elemento. */
+}

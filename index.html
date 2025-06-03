@@ -1,0 +1,109 @@
+<!-- Define el tipo de documento como HTML5 -->
+<!DOCTYPE html>
+<html lang="es"> <!-- Inicia el elemento raíz del documento HTML y establece el idioma como español -->
+
+<head>
+  <meta charset="UTF-8"> <!-- Define la codificación de caracteres del documento como UTF-8 -->
+  <title>Registro de Proyectos de Innovación</title> <!-- Título que aparece en la pestaña del navegador -->
+  <link rel="stylesheet" href="styles.css">  <!-- Enlaza una hoja de estilos externa llamada styles.css -->
+</head>
+
+<body>
+  <div id="loginContainer" class="container"> <!-- Contenedor para la pantalla de inicio de sesión -->
+    <h1>Iniciar Sesión</h1> <!-- Título principal de esta sección -->
+
+    <label for="rol">Selecciona tu rol:</label> <!-- Etiqueta para el menú desplegable de roles -->
+
+    <select id="rol"> <!-- Menú desplegable para elegir el rol (estudiante o admin) -->
+      <option value="">Seleccionar...</option> <!-- Opción por defecto que no tiene valor -->
+      <option value="estudiante">Estudiante</option> <!-- Opción para el rol de estudiante -->
+      <option value="admin">Administrador</option>  <!-- Opción para el rol de administrador -->
+    </select>
+
+    <div id="adminPasswordContainer" style="display: none;"> <!-- Contenedor para ingresar contraseña del administrador, oculto inicialmente -->
+      <label for="adminPassword">Contraseña de administrador:</label>  <!-- Etiqueta para el campo de contraseña -->
+      <input type="password" id="adminPassword">  <!-- Campo de entrada para la contraseña -->
+    </div>
+
+    <button id="btnIngresar">Ingresar</button> <!-- Botón para ingresar al sistema según el rol seleccionado -->
+  </div>
+
+  <div id="formContainer" class="container" style="display: none;">  <!-- Contenedor para el formulario de registro de proyectos (solo para estudiantes), oculto al inicio -->
+    <h1>Registro de Proyectos</h1>  <!-- Título del formulario -->
+
+    <!-- Formulario de proyecto -->
+    <form id="projectForm">
+      <!-- Campo para ingresar el título del proyecto -->
+      <label for="titulo">Título del proyecto:</label>
+      <input type="text" id="titulo" required>
+
+      <!-- Campo para seleccionar la categoría del proyecto -->
+      <label for="categoria">Categoría:</label>
+      <select id="categoria" required>
+        <!-- Opción por defecto -->
+        <option value="">Selecciona una categoría</option>
+        <!-- Opción de categoría -->
+        <option value="Tecnología">Tecnología</option>
+        <option value="Sostenibilidad">Sostenibilidad</option>
+        <option value="Salud">Salud</option>
+        <option value="Educación">Educación</option>
+      </select>
+
+      <!-- Campo para ingresar los nombres de los integrantes -->
+      <label for="integrantes">Integrantes (mínimo 2, máximo 5, separados por coma):</label>
+      <input type="text" id="integrantes" required>
+
+      <!-- Campo para seleccionar el nivel de avance del proyecto -->
+      <label for="avance">Nivel de avance:</label>
+      <select id="avance" required>
+        <option value="">Selecciona el avance</option>
+        <option value="Idea">Idea</option>
+        <option value="Prototipo">Prototipo</option>
+        <option value="Validado">Validado</option>
+      </select>
+
+      <!-- Campo para seleccionar la fecha de postulación del proyecto -->
+      <label for="fecha">Fecha de postulación:</label>
+      <input type="date" id="fecha" required>
+
+      <!-- Campo para ingresar el nombre del grupo o semillero -->
+      <label for="grupo">Grupo o semillero:</label>
+      <input type="text" id="grupo">
+
+      <!-- Casilla para indicar si se requiere autorización ética -->
+      <label>
+        <input type="checkbox" id="requiereEtica">
+        ¿Requiere autorización ética?
+      </label>
+
+      <!-- Campo para ingresar el nombre del documento ético (si aplica) -->
+      <label for="documentoEtico">Documento de autorización ética (si aplica):</label>
+      <input type="text" id="documentoEtico">
+
+      <!-- Botón para enviar el formulario y registrar el proyecto -->
+      <button type="submit">Registrar Proyecto</button>
+    </form>
+
+    <!-- Botón para cerrar sesión del estudiante -->
+    <button id="btnCerrarSesionEstudiante">Cerrar Sesión</button>
+  </div>
+
+  <!-- Contenedor para la vista del administrador, oculto al inicio -->
+  <div id="adminContainer" class="container" style="display: none;">
+    <!-- Título para la sección del administrador -->
+    <h2>Proyectos Registrados</h2>
+
+    <!-- Lista donde se mostrarán los proyectos registrados -->
+    <ul id="listaProyectos"></ul>
+
+    <!-- Botón para borrar todos los registros de proyectos -->
+    <button id="btnBorrarRegistros">Borrar todos los registros</button>
+
+    <!-- Botón para cerrar sesión del administrador -->
+    <button id="btnCerrarSesionAdmin">Cerrar Sesión</button>
+  </div>
+
+  <!-- Se enlaza un archivo JavaScript externo que manejará la lógica -->
+  <script src="script.js"></script>
+</body>
+</html>
