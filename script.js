@@ -1,11 +1,11 @@
 // Configura tu Firebase aquí
 const firebaseConfig = {
-  apiKey: "TU_API_KEY",
-  authDomain: "TU_AUTH_DOMAIN",
-  projectId: "TU_PROJECT_ID",
-  storageBucket: "TU_STORAGE_BUCKET",
-  messagingSenderId: "TU_MESSAGING_ID",
-  appId: "TU_APP_ID"
+  apiKey: "AIzaSyAUXP02D_N2sDxSy4W73U0hY4dlIbXAX-Q",
+  authDomain: "registro-de-proyecto.firebaseapp.com",
+  projectId: "registro-de-proyecto",
+  storageBucket: "registro-de-proyecto.firebasestorage.app",
+  messagingSenderId: "745668793730",
+  appId: "1:745668793730:web:64d4b18ef1cbc4c25fab9b"
 };
 
 // Inicializar Firebase
@@ -26,10 +26,12 @@ const btnBorrarRegistros = document.getElementById('btnBorrarRegistros');
 const btnCerrarSesionEstudiante = document.getElementById('btnCerrarSesionEstudiante');
 const btnCerrarSesionAdmin = document.getElementById('btnCerrarSesionAdmin');
 
+// Mostrar u ocultar input contraseña admin según rol
 rolSelect.addEventListener('change', () => {
   adminPasswordContainer.style.display = rolSelect.value === 'admin' ? 'block' : 'none';
 });
 
+// Botón ingresar
 btnIngresar.addEventListener('click', async () => {
   const rol = rolSelect.value;
   if (rol === 'estudiante') {
@@ -49,16 +51,19 @@ btnIngresar.addEventListener('click', async () => {
   }
 });
 
+// Cerrar sesión estudiante
 btnCerrarSesionEstudiante.addEventListener('click', () => {
   formContainer.style.display = 'none';
   loginContainer.style.display = 'block';
 });
 
+// Cerrar sesión admin
 btnCerrarSesionAdmin.addEventListener('click', () => {
   adminContainer.style.display = 'none';
   loginContainer.style.display = 'block';
 });
 
+// Enviar formulario y guardar proyecto en Firebase
 form.addEventListener('submit', async function (event) {
   event.preventDefault();
 
@@ -71,6 +76,7 @@ form.addEventListener('submit', async function (event) {
   const requiereEtica = document.getElementById('requiereEtica').checked;
   const documentoEtico = document.getElementById('documentoEtico').value.trim();
 
+  // Validaciones
   if (integrantes.length < 2 || integrantes.length > 5) {
     alert('El proyecto debe tener entre 2 y 5 estudiantes.');
     return;
@@ -89,7 +95,7 @@ form.addEventListener('submit', async function (event) {
     return;
   }
 
-  // Validar que ningún integrante ya esté registrado
+  // Validar que ningún integrante ya esté registrado en otro proyecto
   const snapshot = await db.collection("proyectos").get();
   for (const doc of snapshot.docs) {
     const otros = doc.data().integrantes;
@@ -101,6 +107,7 @@ form.addEventListener('submit', async function (event) {
     }
   }
 
+  // Crear objeto nuevo proyecto
   const nuevoProyecto = {
     titulo,
     categoria,
@@ -113,12 +120,14 @@ form.addEventListener('submit', async function (event) {
     estado: 'registrado'
   };
 
+  // Guardar en Firestore
   await db.collection("proyectos").add(nuevoProyecto);
 
   alert('Proyecto registrado con éxito.');
   form.reset();
 });
 
+// Mostrar proyectos en el panel administrador
 async function mostrarProyectos() {
   lista.innerHTML = '';
   const snapshot = await db.collection("proyectos").get();
@@ -130,6 +139,7 @@ async function mostrarProyectos() {
   });
 }
 
+// Borrar todos los registros
 btnBorrarRegistros.addEventListener('click', async () => {
   if (confirm('¿Estás seguro de borrar todos los registros?')) {
     const snapshot = await db.collection("proyectos").get();
