@@ -105,5 +105,25 @@
 
   <!-- Se enlaza un archivo JavaScript externo que manejará la lógica -->
   <script src="script.js"></script>
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.8.1/firebase-app.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyAUXP02D_N2sDxSy4W73U0hY4dlIbXAX-Q",
+    authDomain: "registro-de-proyecto.firebaseapp.com",
+    projectId: "registro-de-proyecto",
+    storageBucket: "registro-de-proyecto.firebasestorage.app",
+    messagingSenderId: "745668793730",
+    appId: "1:745668793730:web:64d4b18ef1cbc4c25fab9b"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+</script>
 </body>
 </html>
