@@ -1,87 +1,95 @@
 // Configura tu Firebase aquí
 const firebaseConfig = {
-  apiKey: "AIzaSyAUXP02D_N2sDxSy4W73U0hY4dlIbXAX-Q",
-  authDomain: "registro-de-proyecto.firebaseapp.com",
-  projectId: "registro-de-proyecto",
-  storageBucket: "registro-de-proyecto.firebasestorage.app",
-  messagingSenderId: "745668793730",
-  appId: "1:745668793730:web:64d4b18ef1cbc4c25fab9b"
+  apiKey: "AIzaSyAUXP02D_N2sDxSy4W73U0hY4dlIbXAX-Q", // Clave de API de Firebase
+  authDomain: "registro-de-proyecto.firebaseapp.com", // Dominio de autenticación
+  projectId: "registro-de-proyecto", // ID del proyecto de Firebase
+  storageBucket: "registro-de-proyecto.firebasestorage.app", // Bucket para almacenamiento de archivos
+  messagingSenderId: "745668793730", // ID del remitente para notificaciones
+  appId: "1:745668793730:web:64d4b18ef1cbc4c25fab9b" // ID de la aplicación
 };
 
-// Inicializar Firebase
+// Inicializar Firebase con la configuración anterior
 firebase.initializeApp(firebaseConfig);
+
+// Obtener instancia de Firestore (base de datos en la nube de Firebase)
 const db = firebase.firestore();
 
-// Elementos del DOM
-const loginContainer = document.getElementById('loginContainer');
-const formContainer = document.getElementById('formContainer');
-const adminContainer = document.getElementById('adminContainer');
-const btnIngresar = document.getElementById('btnIngresar');
-const rolSelect = document.getElementById('rol');
-const adminPasswordContainer = document.getElementById('adminPasswordContainer');
-const adminPasswordInput = document.getElementById('adminPassword');
-const form = document.getElementById('projectForm');
-const lista = document.getElementById('listaProyectos');
-const btnBorrarRegistros = document.getElementById('btnBorrarRegistros');
-const btnCerrarSesionEstudiante = document.getElementById('btnCerrarSesionEstudiante');
-const btnCerrarSesionAdmin = document.getElementById('btnCerrarSesionAdmin');
+// Elementos del DOM (interfaz HTML)
+const loginContainer = document.getElementById('loginContainer'); // Contenedor del formulario de inicio de sesión
+const formContainer = document.getElementById('formContainer'); // Contenedor del formulario para estudiantes
+const adminContainer = document.getElementById('adminContainer'); // Contenedor del panel de administración
+const btnIngresar = document.getElementById('btnIngresar'); // Botón de ingresar
+const rolSelect = document.getElementById('rol'); // Selector de rol (estudiante o admin)
+const adminPasswordContainer = document.getElementById('adminPasswordContainer'); // Contenedor del campo de contraseña para admin
+const adminPasswordInput = document.getElementById('adminPassword'); // Input de contraseña del admin
+const form = document.getElementById('projectForm'); // Formulario del proyecto
+const lista = document.getElementById('listaProyectos'); // Lista donde se muestran los proyectos (admin)
+const btnBorrarRegistros = document.getElementById('btnBorrarRegistros'); // Botón para borrar todos los registros
+const btnCerrarSesionEstudiante = document.getElementById('btnCerrarSesionEstudiante'); // Botón para cerrar sesión estudiante
+const btnCerrarSesionAdmin = document.getElementById('btnCerrarSesionAdmin'); // Botón para cerrar sesión admin
 
-// Mostrar u ocultar input contraseña admin según rol
+// Mostrar u ocultar el campo de contraseña si el rol es admin
 rolSelect.addEventListener('change', () => {
   adminPasswordContainer.style.display = rolSelect.value === 'admin' ? 'block' : 'none';
 });
 
-// Botón ingresar
+// Evento al hacer clic en el botón "Ingresar"
 btnIngresar.addEventListener('click', async () => {
-  const rol = rolSelect.value;
+  const rol = rolSelect.value; // Obtener el rol seleccionado
+
+  // Si el rol es estudiante, mostrar formulario y ocultar login
   if (rol === 'estudiante') {
     loginContainer.style.display = 'none';
     formContainer.style.display = 'block';
-  } else if (rol === 'admin') {
-    const password = adminPasswordInput.value;
-    if (password === 'admin123') {
+  } 
+  // Si el rol es admin, validar contraseña
+  else if (rol === 'admin') {
+    const password = adminPasswordInput.value; // Obtener la contraseña ingresada
+    if (password === 'Eliam0015') { // Validar si la contraseña es correcta
       loginContainer.style.display = 'none';
       adminContainer.style.display = 'block';
-      mostrarProyectos();
+      mostrarProyectos(); // Mostrar los proyectos registrados
     } else {
-      alert('Contraseña incorrecta');
+      alert('Contraseña incorrecta'); // Alerta si la contraseña está mal
     }
   } else {
-    alert('Selecciona un rol');
+    alert('Selecciona un rol'); // Alerta si no se seleccionó rol
   }
 });
 
-// Cerrar sesión estudiante
+// Evento para cerrar sesión del estudiante
 btnCerrarSesionEstudiante.addEventListener('click', () => {
-  formContainer.style.display = 'none';
-  loginContainer.style.display = 'block';
+  formContainer.style.display = 'none'; // Ocultar formulario del estudiante
+  loginContainer.style.display = 'block'; // Mostrar login
 });
 
-// Cerrar sesión admin
+// Evento para cerrar sesión del admin
 btnCerrarSesionAdmin.addEventListener('click', () => {
-  adminContainer.style.display = 'none';
-  loginContainer.style.display = 'block';
+  adminContainer.style.display = 'none'; // Ocultar panel admin
+  loginContainer.style.display = 'block'; // Mostrar login
 });
 
-// Enviar formulario y guardar proyecto en Firebase
+// Evento al enviar el formulario del proyecto
 form.addEventListener('submit', async function (event) {
-  event.preventDefault();
+  event.preventDefault(); // Evitar que se recargue la página
 
+  // Obtener los valores de cada campo del formulario
   const titulo = document.getElementById('titulo').value.trim();
   const categoria = document.getElementById('categoria').value;
-  const integrantes = document.getElementById('integrantes').value.split(',').map(e => e.trim());
+  const integrantes = document.getElementById('integrantes').value.split(',').map(e => e.trim()); // Convertir a array
   const avance = document.getElementById('avance').value;
   const fecha = document.getElementById('fecha').value;
   const grupo = document.getElementById('grupo').value.trim();
-  const requiereEtica = document.getElementById('requiereEtica').checked;
+  const requiereEtica = document.getElementById('requiereEtica').checked; // Checkbox
   const documentoEtico = document.getElementById('documentoEtico').value.trim();
 
-  // Validaciones
+  // Validar que haya entre 2 y 5 estudiantes
   if (integrantes.length < 2 || integrantes.length > 5) {
     alert('El proyecto debe tener entre 2 y 5 estudiantes.');
     return;
   }
 
+  // Validar que la fecha esté dentro del periodo permitido
   const fechaPostulacion = new Date(fecha);
   const inicioConvocatoria = new Date('2025-01-01');
   const finConvocatoria = new Date('2025-06-30');
@@ -90,15 +98,16 @@ form.addEventListener('submit', async function (event) {
     return;
   }
 
+  // Validar que si requiere ética, se haya entregado documento
   if (requiereEtica && !documentoEtico) {
     alert('El proyecto requiere documento ético y no ha sido entregado.');
     return;
   }
 
-  // Validar que ningún integrante ya esté registrado en otro proyecto
-  const snapshot = await db.collection("proyectos").get();
+  // Verificar que ningún estudiante esté en otro proyecto
+  const snapshot = await db.collection("proyectos").get(); // Obtener todos los proyectos
   for (const doc of snapshot.docs) {
-    const otros = doc.data().integrantes;
+    const otros = doc.data().integrantes; // Integrantes del proyecto existente
     for (const estudiante of integrantes) {
       if (otros.includes(estudiante)) {
         alert(`El estudiante ${estudiante} ya participa en otro proyecto.`);
@@ -107,7 +116,7 @@ form.addEventListener('submit', async function (event) {
     }
   }
 
-  // Crear objeto nuevo proyecto
+  // Crear un nuevo objeto con los datos del proyecto
   const nuevoProyecto = {
     titulo,
     categoria,
@@ -117,37 +126,38 @@ form.addEventListener('submit', async function (event) {
     grupo,
     requiereEtica,
     documentoEtico,
-    estado: 'registrado'
+    estado: 'registrado' // Estado inicial del proyecto
   };
 
-  // Guardar en Firestore
+  // Guardar el nuevo proyecto en Firestore
   await db.collection("proyectos").add(nuevoProyecto);
 
-  alert('Proyecto registrado con éxito.');
-  form.reset();
+  alert('Proyecto registrado con éxito.'); // Confirmación
+  form.reset(); // Limpiar el formulario
 });
 
-// Mostrar proyectos en el panel administrador
+// Función para mostrar todos los proyectos en el panel de administrador
 async function mostrarProyectos() {
-  lista.innerHTML = '';
-  const snapshot = await db.collection("proyectos").get();
+  lista.innerHTML = ''; // Limpiar la lista anterior
+  const snapshot = await db.collection("proyectos").get(); // Obtener los proyectos de Firebase
   snapshot.forEach((doc, index) => {
-    const proyecto = doc.data();
-    const item = document.createElement('li');
+    const proyecto = doc.data(); // Obtener los datos del proyecto
+    const item = document.createElement('li'); // Crear un elemento de lista
+    // Mostrar número, título, estado y categoría
     item.textContent = `#${index + 1} - ${proyecto.titulo} (${proyecto.estado}) - ${proyecto.categoria}`;
-    lista.appendChild(item);
+    lista.appendChild(item); // Agregar a la lista en HTML
   });
 }
 
-// Borrar todos los registros
+// Evento para borrar todos los registros de proyectos
 btnBorrarRegistros.addEventListener('click', async () => {
-  if (confirm('¿Estás seguro de borrar todos los registros?')) {
-    const snapshot = await db.collection("proyectos").get();
-    const batch = db.batch();
+  if (confirm('¿Estás seguro de borrar todos los registros?')) { // Confirmación del usuario
+    const snapshot = await db.collection("proyectos").get(); // Obtener todos los proyectos
+    const batch = db.batch(); // Crear lote para eliminar varios documentos
     snapshot.forEach(doc => {
-      batch.delete(doc.ref);
+      batch.delete(doc.ref); // Agregar a lote de eliminación
     });
-    await batch.commit();
-    mostrarProyectos();
+    await batch.commit(); // Ejecutar la eliminación en lote
+    mostrarProyectos(); // Actualizar la lista
   }
 });
