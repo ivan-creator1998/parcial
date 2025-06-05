@@ -140,13 +140,11 @@ form.addEventListener('submit', async function (event) {
 async function mostrarProyectos() {
   lista.innerHTML = ''; // Limpiar la lista anterior
   const snapshot = await db.collection("proyectos").get(); // Obtener los proyectos de Firebase
-  let index = 0; // <-- Línea agregada para corregir el error de NaN
-  snapshot.forEach((doc) => {
-    index++; // Incrementar índice manualmente
+  snapshot.forEach((doc, index) => {
     const proyecto = doc.data(); // Obtener los datos del proyecto
     const item = document.createElement('li'); // Crear un elemento de lista
     // Mostrar número, título, estado y categoría
-    item.textContent = `#${index} - ${proyecto.titulo} (${proyecto.estado}) - ${proyecto.categoria}`;
+    item.textContent = `#${index + 1} - ${proyecto.titulo} (${proyecto.estado}) - ${proyecto.categoria}`;
     lista.appendChild(item); // Agregar a la lista en HTML
   });
 }
